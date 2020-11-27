@@ -1,0 +1,154 @@
+
+#include<iostream>
+#include <string>
+using namespace std;
+
+class Node
+{
+ private:
+	string name;
+	Node* next;
+ public:
+	Node();
+	Node(string theName, Node* nextNode);
+	string getName();
+	void setName(string newName);
+	Node* getNext();
+	void setNext(Node *newNext);
+};
+
+Node::Node() : name(""), next(NULL)
+{
+}
+
+
+Node::Node(string theName, Node* nextNode) :
+ name(theName), next(nextNode)
+{
+}
+
+string Node::getName()
+{
+ return name;
+}
+
+void Node::setName(string newName)
+{
+ name = newName;
+}
+
+
+Node* Node::getNext()
+{
+ return next;
+}
+
+
+void Node::setNext(Node *newNext)
+{
+ next = newNext;
+}
+
+
+class List
+{
+ 	 private:
+	Node* head; // // pointer head of node
+ 	 public:
+	List();
+	~List();
+	void add(string s); // add a node to the list
+	void remove(string s); // deletes first occurrence of s in the list
+	void print(); // print list
+};
+	List::List()
+	{
+		head = NULL;
+	}
+	List::~List()
+	{
+		/*
+		 *
+		 */
+	}
+	// adds a new node with this string to the front of the linked list
+	void List::add(string s)
+	{
+		if (head == NULL)
+		{
+			// new list, make head point to it
+			head = new Node(s, NULL);
+		}
+		else
+		{
+			// make a new node that points to head
+			Node *temp = new Node(s, head);
+			// set head to the new node
+			head = temp;
+		}
+	}
+	// deletes first occurrence of s in the list
+	void List::remove(string s)
+	{
+		Node *temp = head;
+		Node *prev = NULL;
+		while (temp != NULL)
+		{
+			if (temp->getName() == s)
+			{
+				if (prev == NULL)
+				{
+					// deleting the head of the list
+					head = head->getNext();
+					delete temp;
+				}
+				else
+				{
+					// deleting past the head
+					prev->setNext(temp->getNext());
+					delete temp;
+				}
+				break;
+			}
+			prev = temp;
+			temp = temp->getNext();
+			}
+	}
+	// print everything in the list
+	void List::print()
+	{
+		Node *temp = head;
+		while (temp != NULL)
+		{
+			cout << temp->getName() << endl;
+			temp = temp->getNext();
+		}
+		cout << endl;
+		cout << "==============================" << endl;
+		cout << "Total (GST Incl.)	43.68	"	<< endl;
+		cout << "===============================" << endl;
+	}
+
+
+int main()
+{
+ List ML;
+
+ 	 	cout << "==============================" << endl;
+        cout << "BC Items 		Price "	<< endl;
+        cout << "===============================" << endl;
+        cout << " " << endl;
+        ML.add("10 Pagoda Gnut 110g 	3.49");
+        ML.add("11 Hup Seng Cream Cracker 4.19");
+        ML.add("12 Yit Poh 2n1 Kopi-o 7.28");
+        ML.add("13 Zoelife SN & Seed 5.24");
+        ML.add("14 Gatsby S/FO Wet&Hard 16.99");
+        ML.add("15 GB W/G U/Hold 150g 6.49");
+
+        ML.print();
+
+
+
+
+ return 0;
+}
